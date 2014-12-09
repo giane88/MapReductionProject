@@ -37,12 +37,15 @@ public class HourHouseWritable implements WritableComparable<HourHouseWritable> 
 
 	@Override
 	public int compareTo(HourHouseWritable o) {
-		if ((this.hour.compareTo(o.hour) == 0)
-				&& (this.houseID.compareTo(o.houseID) == 0)) {
+		if (o == null) {
+			throw new NullPointerException();
+		} else if (o == this) {
 			return 0;
-		} else {
-			return 1;
 		}
+		if (this.houseID.compareTo(o.houseID) == 0) {
+			return this.hour.compareTo(o.hour);
+		} else
+			return this.houseID.compareTo(o.houseID);
 	}
 
 	@Override
@@ -58,8 +61,7 @@ public class HourHouseWritable implements WritableComparable<HourHouseWritable> 
 
 	@Override
 	public String toString() {
-		return "HouseID: " + houseID+ " Hour: "
-				+ hour;
+		return "HouseID: " + houseID + " Hour: " + hour;
 	}
 
 	@Override

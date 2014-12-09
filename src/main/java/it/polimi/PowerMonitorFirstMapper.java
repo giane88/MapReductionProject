@@ -23,15 +23,11 @@ public class PowerMonitorFirstMapper extends
 			throws IOException, InterruptedException {
 
 		LOG.setLevel(Level.INFO);
-		LOG.info("Inizio LETTURA");
-		System.out.println("Inizio LETTURA");
 		// Lettura di una riga e divisione nei diversi campi
 		String line = value.toString();
-		LOG.info("LETTURA: " + line);
 		String[] fields = line.split(",");
-		System.out.println("LETTURA: " + line);
 		if (fields.length < 6) {
-			LOG.info("Errore: linea non conforme");
+			LOG.error("Errore: linea non conforme");
 			return;
 		}
 
@@ -48,6 +44,8 @@ public class PowerMonitorFirstMapper extends
 		Long timeZero = Long.parseLong(tmp);
 		// Calcolo ora
 		int hour = (int) ((timestamp - timeZero) / 3600);
+		LOG.info("Ora: " + hour + " Casa: " + house + " Presa: " + sensor
+				+ " Carico: " + load);
 
 		// Scrittura dei valori
 		context.write(new HourHouseWritable(hour, house),

@@ -23,7 +23,7 @@ public class SensorLoadWritable implements
 		this.sensorID = new IntWritable(sensor);
 		this.loadValue = new FloatWritable(load);
 	}
-	
+
 	public IntWritable getSensorID() {
 		return sensorID;
 	}
@@ -46,12 +46,15 @@ public class SensorLoadWritable implements
 
 	@Override
 	public int compareTo(SensorLoadWritable o) {
-		if ((this.sensorID.compareTo(o.sensorID) == 0)
-				&& (this.loadValue.compareTo(o.loadValue) == 0)) {
+		if (o == null) {
+			throw new NullPointerException();
+		} else if (o == this) {
 			return 0;
-		} else {
-			return 1;
 		}
+		if (this.sensorID.compareTo(o.sensorID) == 0) {
+			return this.loadValue.compareTo(o.loadValue);
+		} else
+			return this.sensorID.compareTo(o.sensorID);
 	}
 
 	@Override
@@ -67,8 +70,7 @@ public class SensorLoadWritable implements
 
 	@Override
 	public String toString() {
-		return "SensorID: " + sensorID + " Load: "
-				+ loadValue;
+		return "SensorID: " + sensorID + " Load: " + loadValue;
 	}
 
 	@Override
